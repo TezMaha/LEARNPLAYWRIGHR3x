@@ -1,0 +1,9 @@
+//multiple condition
+
+let age = 27;
+//age >18 - she will goa, else not esle
+//drink>25 yes, else no
+
+let is_Tej_enjoy = age>18 ? (age>26 ? "drink" : "no") : false;
+//console.log(is_Tej_enjoy);
+console.log(`Can Tej Drink? : ${is_Tej_enjoy}`);

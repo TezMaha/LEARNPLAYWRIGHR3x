@@ -1,0 +1,33 @@
+// Java Script Identifier IQ
+
+
+let validName = "start with letter";
+let _private = "start with underscore";
+let $dollarSign = "start with dollar sign";
+
+
+let item1 = "start with letter and number";
+let _item2 = "start with underscore and number";
+let $item3 = "start with dollar sign and number";
+
+//let 1StPlace = "invalid identifier"; // Invalid: starts with a number
+
+//let 2ndItem= "invalid identifier"; // Invalid: starts with a number
+
+
+//keywords are reserved words in JavaScript and cannot be used as identifiers. Here are some examples of invalid identifiers:
+//let class= "invalid identifier"; // Invalid: reserved keyword
+
+//let const = "invalid identifier"; // Invalid: reserved keyword
+
+//let function = "invalid identifier"; // Invalid: reserved keyword
+
+
+let myVariable = "valid identifier"; // Valid: starts with a letter
+let _myVariable = "valid identifier"; // Valid: starts with an underscor
+let Function = "valid identifier"; // Valid: starts with a letter, but not a reserved keyword
+
+let MyVariable = "valid identifier"; // Valid: starts with a letter
+let café = "valid identifier"; // Valid: starts with a letter, includes a special character
+let résumé = "valid identifier"; // Valid: starts with a letter, includes a special character
+

@@ -1,0 +1,17 @@
+//null and undefined
+
+console.log(null==undefined);//true - loose check we will check either the value or data type
+console.log(null===undefined);//false- diff erent data type - strict check we will check for the both value and data type
+console.log(null==0);//false - null only == undefined/null
+console.log(null>=0); //true
+console.log(null>0); //false
+console.log(null==0 || null>0); //false
+
+
+
+
+
+
+
+
+
