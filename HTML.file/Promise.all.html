@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research: Promise.all()</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 2rem auto;
+      max-width: 920px;
+      padding: 0 1rem;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    h1, h2, h3 { color: #0f172a; }
+    section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    code, pre {
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    code { padding: 0.15rem 0.35rem; }
+    pre {
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+    }
+    ul { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Research Note: <code>Promise.all()</code></h1>
+  <p>
+    <code>Promise.all()</code> is a JavaScript method that runs multiple promises concurrently and resolves
+    when all of them succeed, returning results in the same input order.
+  </p>
+
+  <section>
+    <h2>How it works</h2>
+    <ul>
+      <li>Takes an iterable (usually an array) of promises.</li>
+      <li>Resolves once every promise resolves.</li>
+      <li>Rejects immediately if any one promise rejects.</li>
+      <li>Result order matches the input promise order, not completion order.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Example</h2>
+    <pre><code>async function loadDashboard() {
+  try {
+    const [user, posts, notifications] = await Promise.all([
+      fetch("/api/user").then(r => r.json()),
+      fetch("/api/posts").then(r => r.json()),
+      fetch("/api/notifications").then(r => r.json())
+    ]);
+
+    return { user, posts, notifications };
+  } catch (error) {
+    console.error("Failed to load dashboard data:", error);
+    throw error;
+  }
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Improves performance by executing independent async tasks in parallel.</li>
+      <li>Reduces total wait time compared to awaiting each task sequentially.</li>
+      <li>Provides a clean pattern for combining multiple async results.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Common Pitfalls</h2>
+    <ul>
+      <li>If one promise fails, the entire <code>Promise.all()</code> fails.</li>
+      <li>Not ideal when you need partial success handling; use <code>Promise.allSettled()</code> then.</li>
+      <li>Launching too many heavy operations at once can overwhelm APIs or resources.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>When to use</h2>
+    <ul>
+      <li>Fetching several independent endpoints for one page load.</li>
+      <li>Running parallel file/network/database operations where all must succeed.</li>
+      <li>Combining related async data before rendering or processing.</li>
+    </ul>
+  </section>
+</body>
+</html>

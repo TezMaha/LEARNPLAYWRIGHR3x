@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research: new Promise</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 2rem auto;
+      max-width: 920px;
+      padding: 0 1rem;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    h1, h2, h3 { color: #0f172a; }
+    section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    code, pre {
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    code { padding: 0.15rem 0.35rem; }
+    pre {
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+    }
+    ul { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Research Note: <code>new Promise</code></h1>
+  <p>
+    <code>new Promise()</code> creates a Promise manually in JavaScript. It is useful when wrapping
+    callback-based APIs or custom asynchronous operations into Promise-based flows.
+  </p>
+
+  <section>
+    <h2>How it works</h2>
+    <ul>
+      <li>Syntax: <code>new Promise((resolve, reject) =&gt; { ... })</code>.</li>
+      <li>Call <code>resolve(value)</code> when the async task succeeds.</li>
+      <li>Call <code>reject(error)</code> when the async task fails.</li>
+      <li>A Promise can settle only once: resolved or rejected.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Example</h2>
+    <pre><code>function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(`Done after ${ms}ms`), ms);
+  });
+}
+
+wait(1000)
+  .then(console.log)
+  .catch(console.error);</code></pre>
+  </section>
+
+  <section>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Converts old callback-style code into modern Promise chains.</li>
+      <li>Works naturally with <code>.then()</code>, <code>.catch()</code>, and <code>async/await</code>.</li>
+      <li>Improves readability and error propagation in async flows.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Common Pitfalls</h2>
+    <ul>
+      <li>Forgetting to call <code>resolve</code> or <code>reject</code> causes pending promises forever.</li>
+      <li>Throwing inside executor without handling can reject unexpectedly.</li>
+      <li>Overusing manual promises where built-in Promise APIs already exist.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>When to use</h2>
+    <ul>
+      <li>Wrapping callback APIs such as timers, file reads, or legacy SDK methods.</li>
+      <li>Building custom async utilities with explicit success/failure control.</li>
+      <li>Integrating non-Promise asynchronous code into async/await workflows.</li>
+    </ul>
+  </section>
+</body>
+</html>

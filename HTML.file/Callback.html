@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research: Callback</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 2rem auto;
+      max-width: 920px;
+      padding: 0 1rem;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    h1, h2, h3 { color: #0f172a; }
+    section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    code, pre {
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    code { padding: 0.15rem 0.35rem; }
+    pre {
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+    }
+    ul { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Research Note: <code>callback</code></h1>
+  <p>
+    A callback is a function passed as an argument to another function so it can be executed later,
+    typically after an operation completes.
+  </p>
+
+  <section>
+    <h2>How it works</h2>
+    <ul>
+      <li>One function receives another function as input.</li>
+      <li>That input function is invoked at a later point in time.</li>
+      <li>Commonly used for asynchronous tasks and event handling.</li>
+      <li>In Node.js style, callbacks often follow <code>(error, result)</code> pattern.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Example</h2>
+    <pre><code>function processUser(id, callback) {
+  setTimeout(() => {
+    const user = { id, name: "Alex" };
+    callback(null, user);
+  }, 500);
+}
+
+processUser(1, (err, user) => {
+  if (err) {
+    console.error("Failed:", err);
+    return;
+  }
+  console.log("Loaded user:", user);
+});</code></pre>
+  </section>
+
+  <section>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Simple way to run code after completion of another task.</li>
+      <li>Core to event-driven programming (click events, listeners, timers).</li>
+      <li>Widely supported across JavaScript environments and legacy APIs.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Common Pitfalls</h2>
+    <ul>
+      <li>Deeply nested callbacks can reduce readability (callback hell).</li>
+      <li>Error handling may become repetitive in large callback chains.</li>
+      <li>Control flow is harder to reason about than Promise/async-await code.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>When to use</h2>
+    <ul>
+      <li>Handling events and UI interactions.</li>
+      <li>Interacting with libraries that expose callback-based APIs.</li>
+      <li>Small async tasks where introducing Promise wrappers is unnecessary.</li>
+    </ul>
+  </section>
+</body>
+</html>

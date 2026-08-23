@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research: await Keyword</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 2rem auto;
+      max-width: 920px;
+      padding: 0 1rem;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    h1, h2, h3 { color: #0f172a; }
+    section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    code, pre {
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    code { padding: 0.15rem 0.35rem; }
+    pre {
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+    }
+    ul { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Research Note: <code>await</code> Keyword</h1>
+  <p>
+    The <code>await</code> keyword pauses execution within an asynchronous function until an asynchronous operation completes,
+    then returns its resolved value (or raises/throws an error if it fails).
+  </p>
+
+  <section>
+    <h2>JavaScript</h2>
+    <h3>How it works</h3>
+    <ul>
+      <li><code>await</code> can only be used inside <code>async</code> functions (or top-level in modern modules).</li>
+      <li>It waits for a Promise to settle, then continues with the resolved value.</li>
+      <li>If the Promise rejects, the rejection is thrown and should be handled with <code>try/catch</code>.</li>
+    </ul>
+
+    <h3>Example</h3>
+    <pre><code>async function loadProfile(userId) {
+  try {
+    const response = await fetch(`/api/profile/${userId}`);
+    if (!response.ok) throw new Error("Unable to load profile");
+    const profile = await response.json();
+    return profile;
+  } catch (error) {
+    console.error("Profile request failed:", error);
+    throw error;
+  }
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>Python</h2>
+    <h3>How it works</h3>
+    <ul>
+      <li><code>await</code> is used inside <code>async def</code> coroutines.</li>
+      <li>It waits for awaitable objects such as coroutines, tasks, or futures.</li>
+      <li>Execution is cooperatively yielded to the event loop while waiting.</li>
+    </ul>
+
+    <h3>Example</h3>
+    <pre><code>import asyncio
+
+async def get_value():
+    await asyncio.sleep(1)
+    return 42
+
+async def main():
+    value = await get_value()
+    print(f"Result: {value}")
+
+asyncio.run(main())</code></pre>
+  </section>
+
+  <section>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Makes asynchronous code read like synchronous code.</li>
+      <li>Improves maintainability compared to chained callbacks.</li>
+      <li>Enables cleaner sequencing of dependent async steps.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Common Pitfalls</h2>
+    <ul>
+      <li>Using <code>await</code> outside an async context causes syntax/runtime errors.</li>
+      <li>Awaiting independent operations one-by-one can be slower than running them concurrently.</li>
+      <li>Missing error handling around awaited operations can break application flow.</li>
+    </ul>
+  </section>
+</body>
+</html>

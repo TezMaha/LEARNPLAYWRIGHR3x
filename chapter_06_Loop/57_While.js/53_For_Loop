@@ -1,0 +1,14 @@
+//For Loop
+//Help you to repeat a block of code a certain number of times
+
+//ICU- Initialize, Condition, Update
+
+//for (let i= 0; i<=10; i++) {
+  //  console.log(i);
+
+//}
+
+for(let i= 0; i<10;++i){
+    console.log(i);
+    
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research: async Keyword</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 2rem auto;
+      max-width: 920px;
+      padding: 0 1rem;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    h1, h2, h3 { color: #0f172a; }
+    section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    code, pre {
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    code { padding: 0.15rem 0.35rem; }
+    pre {
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+    }
+    ul { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Research Note: <code>async</code> Keyword</h1>
+  <p>
+    The <code>async</code> keyword is used to define asynchronous functions, allowing non-blocking operations
+    (like network calls, file I/O, and timers) while keeping code readable with <code>await</code>.
+  </p>
+
+  <section>
+    <h2>JavaScript</h2>
+    <h3>What it does</h3>
+    <ul>
+      <li>An <code>async function</code> always returns a <code>Promise</code>.</li>
+      <li><code>await</code> pauses execution inside that async function until a Promise settles.</li>
+      <li>Errors are handled with <code>try/catch</code> around <code>await</code> calls.</li>
+    </ul>
+
+    <h3>Example</h3>
+    <pre><code>async function fetchUser(id) {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+    if (!response.ok) throw new Error("Failed to fetch user");
+    return await response.json();
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>Python</h2>
+    <h3>What it does</h3>
+    <ul>
+      <li><code>async def</code> defines a coroutine function.</li>
+      <li><code>await</code> waits for an awaitable object inside an async function.</li>
+      <li>Typically used with an event loop (<code>asyncio</code>).</li>
+    </ul>
+
+    <h3>Example</h3>
+    <pre><code>import asyncio
+
+async def fetch_data():
+    await asyncio.sleep(1)
+    return "done"
+
+async def main():
+    result = await fetch_data()
+    print(result)
+
+asyncio.run(main())</code></pre>
+  </section>
+
+  <section>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Improves responsiveness in I/O-heavy tasks.</li>
+      <li>Reduces callback nesting and improves readability.</li>
+      <li>Supports concurrent workflows when combined with Promise/task utilities.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Common Pitfalls</h2>
+    <ul>
+      <li>Forgetting to <code>await</code> a Promise/coroutine can cause unexpected behavior.</li>
+      <li>Using CPU-heavy work in async code still blocks unless offloaded.</li>
+      <li>Unhandled rejections/exceptions can terminate flows silently if not surfaced.</li>
+    </ul>
+  </section>
+</body>
+</html>

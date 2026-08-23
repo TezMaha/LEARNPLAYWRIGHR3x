@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research: Promise.race()</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 2rem auto;
+      max-width: 920px;
+      padding: 0 1rem;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    h1, h2, h3 { color: #0f172a; }
+    section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    code, pre {
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    code { padding: 0.15rem 0.35rem; }
+    pre {
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+    }
+    ul { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Research Note: <code>Promise.race()</code></h1>
+  <p>
+    <code>Promise.race()</code> returns a promise that settles as soon as the first input promise settles,
+    whether it resolves or rejects.
+  </p>
+
+  <section>
+    <h2>How it works</h2>
+    <ul>
+      <li>Accepts an iterable (usually an array) of promises.</li>
+      <li>The earliest settled promise decides the result.</li>
+      <li>If the first settled promise resolves, <code>Promise.race()</code> resolves.</li>
+      <li>If the first settled promise rejects, <code>Promise.race()</code> rejects.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Example</h2>
+    <pre><code>function timeout(ms) {
+  return new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Request timed out")), ms)
+  );
+}
+
+async function fetchWithTimeout(url, ms = 3000) {
+  const response = await Promise.race([
+    fetch(url),
+    timeout(ms)
+  ]);
+  return response.json();
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Useful for implementing request timeouts.</li>
+      <li>Helps choose the fastest source among multiple async options.</li>
+      <li>Supports responsive fallback strategies.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Common Pitfalls</h2>
+    <ul>
+      <li>Loser promises still continue running unless canceled separately.</li>
+      <li>A fast rejection can fail the whole race even if success would arrive shortly.</li>
+      <li>Not suitable when you need all results; use <code>Promise.all()</code> instead.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>When to use</h2>
+    <ul>
+      <li>Adding timeout behavior to API calls.</li>
+      <li>Competing mirrored services and taking the first response.</li>
+      <li>Selecting quickest cached vs remote data source.</li>
+    </ul>
+  </section>
+</body>
+</html>
